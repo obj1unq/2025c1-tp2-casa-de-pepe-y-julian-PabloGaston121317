@@ -76,13 +76,11 @@ object casa {
     }
 
     method comprar(cosa){
-        cuentaBancaria.extraccionPorCompra(cosa.precio())
+        cuentaBancaria.extraer(cosa.precio())
         compras.add(cosa)
     }
 
-    // Cree otro metodo  en cuentas por que me saltaba error en   todos los test de la casa de julian
-    // por la excepcion que solo puede extraer  2000 pesos
-    // y la heladera tiene un precio de 200000 mil
+  
 
     method compras() = compras
 

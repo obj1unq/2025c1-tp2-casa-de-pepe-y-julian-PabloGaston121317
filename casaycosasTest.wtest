@@ -5,13 +5,11 @@ import cuenta.*
 describe "casos de prueba "{
 
     method initialize(){
-        cuentaCorriente.saldo(500000)
+        casa.cuentaBancaria(cuentaConGastos)
         casa.comprar(heladera)
         casa.comprar(cama)
         casa.comprar(plancha)
 
-        // me parecio  mejor la opcion de hacer el initialize  asi no  estoy copiando y pegando las compras
-        //  EL setter  de la cuenta corriente  es por  el tema del gasto de la compra
     }
 
     test "pepe y julian compran una heladera , cama y plancha"{
