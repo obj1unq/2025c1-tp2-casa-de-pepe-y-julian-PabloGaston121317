@@ -1,0 +1,135 @@
+import casa.*
+import cosas.*
+import cuenta.*
+
+describe "casos de prueba "{
+
+    method initialize(){
+        casa.cuentaBancaria(cuentaConGastos)
+        casa.comprar(heladera)
+        casa.comprar(cama)
+        casa.comprar(plancha)
+
+    }
+
+    test "pepe y julian compran una heladera , cama y plancha"{
+
+     
+
+        assert.equals([heladera,cama,plancha], casa.compras())
+    }
+
+    test "indica que la cantidad de compras de julian y pepe sea 3 (heladera,cama,plancha)"{
+       
+
+        assert.equals(3, casa.cantidadDeCosasCompradas())
+    }
+
+    test "verifica que en las compras tenga un electrodomestico"{
+    
+
+        assert.that(casa.tieneAlgun(electrodomestico))
+    }
+
+    test "verifica que en las compras tenga un mueble"{
+        assert.that(casa.tieneAlgun(mueble))
+    }
+
+    test "verifica que en las compras no tenga comida"{
+        assert.notThat(casa.tieneAlgun(comida))
+    }
+
+    test "verifica que su ultima compra es un electrodomestico y no un mueble"{
+
+        assert.that(casa.vieneDeComprar(electrodomestico))
+        assert.notThat(casa.vieneDeComprar(mueble))
+    }
+
+    test "verifica que es derrochona ya que gasta mas de  9000 pesos (29200)"{
+
+        assert.that(casa.esDerrochona())
+    }
+
+    test "devuelve la compra mas cara (heladera)"{
+        assert.equals(heladera, casa.compraMasCara())
+    }
+
+    test "verifica que los electrodomesticos comprados hasta ahora sean heladera , plancha"{
+        assert.equals([heladera,plancha], casa.comprados(electrodomestico))
+    }
+
+    test "los muebles comprados hasta ahora es una cama" {
+      assert.equals([cama], casa.comprados(mueble))
+    }
+
+    test "verifica que no hay comidas compradas " {
+      assert.equals([], casa.comprados(comida))
+    }
+
+    test "indica que las compras realizadas no seas solo comidas"{
+
+        assert.notThat(casa.malaEpoca())
+    }
+
+    test "verifica si falta comprar alguno de estas cosas (tiraDeAsado,plancha,paqueteDeFideos), debe devolver tiraDeAsado y fideos"{
+
+        assert.equals([tiraDeAsado,paqueteDeFideos], casa.queFaltaComprar([tiraDeAsado,plancha,paqueteDeFideos]))
+    }
+
+    test "falta comida, verifica si menos de 2  compras son comida" {
+      assert.that(casa.faltaComida())
+    }
+
+    test "devuelve las categorias que haya hecho una compra, (electrodomestico, mueble)" {
+      
+      assert.equals([electrodomestico,mueble], casa.categoriasCompradas())
+    }
+}
+describe "cuentas" {
+
+
+
+    test "testeo cuenta corriente" {
+        cuentaCorriente.saldo(20)
+        cuentaCorriente.depositar(1000)
+
+        assert.equals(1020, cuentaCorriente.saldo())
+
+        cuentaCorriente.extraer(50)
+
+        assert.equals(970, cuentaCorriente.saldo())
+
+        assert.throwsException({ cuentaCorriente.extraer(2000) })
+    }
+
+    test "testeo cuenta con gastos" {
+      cuentaConGastos.saldo(500)
+      cuentaConGastos.depositar(1000)
+
+      assert.equals(1480, cuentaConGastos.saldo())
+
+      cuentaConGastos.extraer(30)
+
+      assert.equals(1450, cuentaConGastos.saldo())
+
+      assert.throwsException({ cuentaConGastos.depositar(2000) })
+      assert.equals(1450, cuentaConGastos.saldo())
+
+      cuentaConGastos.extraer(2000)
+
+      assert.equals(-550, cuentaConGastos.saldo())
+    }
+
+    test "la casa tiene cuenta corriente con saldo de 1000, compran una tira de asado y un paquete de fideos . la cuenta corriente queda con saldo de 600" {
+        cuentaCorriente.saldo(1000)
+        casa.comprar(tiraDeAsado)
+        casa.comprar(paqueteDeFideos)
+
+        assert.equals(600, cuentaCorriente.saldo())
+    }
+    
+}
+
+
+
+
